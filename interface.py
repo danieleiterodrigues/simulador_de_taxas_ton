@@ -177,12 +177,10 @@ def exibir_resultados():
     except ValueError as e:
         messagebox.showerror("Erro", str(e))
 
-# Configuração da janela principal
 root = tk.Tk()
 root.title("Simulador de Parcelamento Ton")
 
-# Ajustar o tamanho do ícone antes de carregá-lo
-icon_path = 'transp.ico'  # Certifique-se de que o arquivo .ico transparente esteja no mesmo diretório que o script
+icon_path = 'transp.ico'
 try:
     root.iconbitmap(icon_path)
 except Exception as e:
@@ -212,7 +210,6 @@ botao_calcular.grid(row=2, columnspan=2, pady=10)
 label_resultado = tk.Label(root, text="Resultados:")
 label_resultado.pack(padx=10, pady=5)
 
-# Ajustar o tamanho da área de resultados
 texto_resultado = tk.Text(root, height=12, width=50, state=tk.DISABLED)
 texto_resultado.pack(padx=30, pady=50)
 
