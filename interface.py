@@ -48,16 +48,16 @@
 #     try:
 #         valor_recebido = float(entry_valor_recebido.get())
 #         bandeira = combo_bandeira.get()
-        
+
 #         if valor_recebido <= 0:
 #             raise ValueError("O valor recebido deve ser positivo.")
-        
+
 #         resultados = calcular_valores_parcelas(valor_recebido, bandeira)
-        
+
 #         resultado_texto = ""
 #         for parcelas, valor in resultados.items():
 #             resultado_texto += f"{parcelas}x: R${valor:.2f}\n"
-        
+
 #         texto_resultado.config(state=tk.NORMAL)
 #         texto_resultado.delete(1.0, tk.END)
 #         texto_resultado.insert(tk.END, resultado_texto)
@@ -110,21 +110,22 @@ import tkinter as tk
 from tkinter import messagebox
 from PIL import Image, ImageTk
 
+
 def calcular_valores_parcelas(valor_recebido, bandeira):
     taxas = {
         'Visa/Master': {
-            1: 0.0079,
-            2: 0.0399,
-            3: 0.0499,
-            4: 0.0599,
-            5: 0.0699,
-            6: 0.0699,
-            7: 0.0699,
-            8: 0.0699,
-            9: 0.0699,
-            10: 0.0699,
-            11: 0.0699,
-            12: 0.0699,
+            1: 0.0315,
+            2: 0.0563,
+            3: 0.0619,
+            4: 0.0699,
+            5: 0.0799,
+            6: 0.0899,
+            7: 0.0959,
+            8: 0.0999,
+            9: 0.1099,
+            10: 0.1149,
+            11: 0.1235,
+            12: 0.1239,
         },
         'Elo/Hipercard/Amex': {
             1: 0.0434,
@@ -149,33 +150,36 @@ def calcular_valores_parcelas(valor_recebido, bandeira):
     for parcelas, taxa in taxas[bandeira].items():
         valor_original = valor_recebido / (1 - taxa)
         valor_parcela = valor_original / parcelas
-        valores_parcelas[parcelas] = (round(valor_original, 2), round(valor_parcela, 2))
+        valores_parcelas[parcelas] = (
+            round(valor_original, 2), round(valor_parcela, 2))
 
     return valores_parcelas
+
 
 def exibir_resultados():
     try:
         valor_recebido = float(entry_valor_recebido.get())
         bandeira = combo_bandeira.get()
-        
+
         if valor_recebido <= 0:
             raise ValueError("O valor recebido deve ser positivo.")
-        
+
         resultados = calcular_valores_parcelas(valor_recebido, bandeira)
-        
+
         resultado_texto = ""
         for parcelas, (valor_total, valor_parcela) in resultados.items():
             if parcelas == 1:
                 resultado_texto += f"{parcelas}x: Total R${valor_total:.2f}\n"
             else:
                 resultado_texto += f"{parcelas}x: Total R${valor_total:.2f}, Parcela R${valor_parcela:.2f}\n"
-        
+
         texto_resultado.config(state=tk.NORMAL)
         texto_resultado.delete(1.0, tk.END)
         texto_resultado.insert(tk.END, resultado_texto)
         texto_resultado.config(state=tk.DISABLED)
     except ValueError as e:
         messagebox.showerror("Erro", str(e))
+
 
 root = tk.Tk()
 root.title("Simulador de Parcelamento Ton")
@@ -214,4 +218,3 @@ texto_resultado = tk.Text(root, height=12, width=50, state=tk.DISABLED)
 texto_resultado.pack(padx=30, pady=50)
 
 root.mainloop()
-
